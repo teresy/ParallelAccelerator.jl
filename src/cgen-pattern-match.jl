@@ -634,7 +634,7 @@ function from_assignment_match_hvcat(lhs, rhs::Expr, linfo)
         nr = length(rows)
         nc = rows[1] # all rows should have the same size
         s *= from_expr(lhs,linfo) * " = j2c_array<$typ>::new_j2c_array_2d(NULL, $nr, $nc);\n"
-        s *= mapfoldl((i) -> from_setindex([lhs,values[i],convert(Int64,ceil(i/nc)),(i-1)%nc+1],linfo)*";", (a, b) -> "$a $b", 1:length(values))
+        s *= mapfoldl((i) -> from_setindex([lhs,values[i],convert(Int64,cld(i,nc)),(i-1)%nc+1],linfo)*";", (a, b) -> "$a $b", 1:length(values))
     end
     return s
 end
